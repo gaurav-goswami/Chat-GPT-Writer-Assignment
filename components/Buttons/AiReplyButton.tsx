@@ -1,4 +1,4 @@
-import WandIcon from '../assets/wand-icon.svg';
+import WandIcon from '../../assets/wand-icon.svg';
 import React from 'react';
 
 const AiReplyButton: React.FC = () => {

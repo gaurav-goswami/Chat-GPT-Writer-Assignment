@@ -1,4 +1,4 @@
-import AiReplyButton from "@/components/AiReplyButton.tsx";
+import AiReplyButton from "@/components/Buttons/AiReplyButton";
 import PromptModal from "@/components/PromptModal";
 import React from "react";
 import { createRoot } from "react-dom/client";
