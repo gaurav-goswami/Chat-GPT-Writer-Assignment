@@ -67,7 +67,6 @@ const PromptModal: React.FC<PromptModalProps> = ({ closeModal }) => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        {/* <GenPromptBtn /> */}
         <div className='flex items-center gap-4'>
           {
             messages.length > 0 && <InsertPromptBtn />

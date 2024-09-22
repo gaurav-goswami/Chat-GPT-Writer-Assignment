@@ -76,6 +76,20 @@ function inject_ai_reply_icon(message_input_field: Element) {
   root.render(React.createElement(AiReplyButton));
 }
 
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.from === "insert-btn") {
+    const messageInputField = document.querySelector(".msg-form__contenteditable");
+    if (messageInputField) {
+      (messageInputField as HTMLElement).focus();
+      document.execCommand('insertText', false, message.text);
+      sendResponse({ status: "success" });
+    } else {
+      sendResponse({ status: "failed", reason: "Message input field not found" });
+    }
+  }
+});
+
+
 function injectTailwindCSS() {
   const tailwindLink = document.createElement('link');
   tailwindLink.rel = 'stylesheet';
