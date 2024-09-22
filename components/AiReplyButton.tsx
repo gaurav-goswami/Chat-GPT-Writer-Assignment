@@ -3,8 +3,8 @@ import React from 'react';
 
 const AiReplyButton: React.FC = () => {
     return (
-        <button style={{ borderRadius: '50%', position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%", height: '100%' }} className='shadow-sm' onClick={() => console.log("Clicked on the button")}>
-            <img src={WandIcon} alt="AI Reply Button" style={{ width: '12px', height: '12px' }} />
+        <button className='shadow-md rounded-full absolute flex justify-center items-center w-full h-full' onClick={() => console.log("Clicked on the button")}>
+            <img src={WandIcon} alt="AI Reply Button" className='w-5 h-5' />
         </button>
     )
 }
