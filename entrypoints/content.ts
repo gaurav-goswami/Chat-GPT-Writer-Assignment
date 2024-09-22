@@ -1,4 +1,5 @@
-import AiReplyButton from "@/components/AiReplyButton.tsx";
+import AiReplyButton from "@/components/Buttons/AiReplyButton";
+import PromptModal from "@/components/PromptModal";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
@@ -52,10 +53,48 @@ function inject_ai_reply_icon(message_input_field: Element) {
 
   iconContainer.addEventListener('click', (e) => {
     e.preventDefault();
+    iconContainer.style.display = 'none';
+    const modalContainer = document.createElement('div');
+    modalContainer.id = 'prompt-modal-container';
+    modalContainer.style.position = 'absolute';
+    modalContainer.style.top = '0';
+    modalContainer.style.left = '0';
+    modalContainer.style.height = '100%';
+    modalContainer.style.width = '100%';
+    modalContainer.style.zIndex = '1000';
+    document.body.appendChild(modalContainer);
+
+    const closeModal = () => {
+      modalContainer.remove();
+    };
+
+    const modalRoot = createRoot(modalContainer);
+    modalRoot.render(React.createElement(PromptModal, { closeModal }));
   });
 
   const root = createRoot(iconContainer);
   root.render(React.createElement(AiReplyButton));
 }
 
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.from === "insert-btn") {
+    const messageInputField = document.querySelector(".msg-form__contenteditable");
+    if (messageInputField) {
+      (messageInputField as HTMLElement).focus();
+      document.execCommand('insertText', false, message.text);
+      sendResponse({ status: "success" });
+    } else {
+      sendResponse({ status: "failed", reason: "Message input field not found" });
+    }
+  }
+});
 
+
+function injectTailwindCSS() {
+  const tailwindLink = document.createElement('link');
+  tailwindLink.rel = 'stylesheet';
+  tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
+  document.head.appendChild(tailwindLink);
+}
+
+injectTailwindCSS();
