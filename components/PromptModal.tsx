@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
-// import GenPromptBtn from './Buttons/GenPromptBtn';
-import GenerateIcon from '../assets/send-command.svg';
-import RegenerateIcon from '../assets/regenerate.svg';
-import InsertPromptBtn from './Buttons/InsertPromptBtn';
+import GenPromptBtn from './Buttons/GenPromptBtn';
 
 interface PromptModalProps {
   closeModal: () => void;
@@ -32,7 +29,6 @@ const PromptModal: React.FC<PromptModalProps> = ({ closeModal }) => {
       setMessages([...messages, { message: prompt, isUser: true }]);
       setPrompt('');
     } else {
-      // handle empty prompt
       console.log("Prompt is empty, cannot generate message");
     }
   }
@@ -54,7 +50,7 @@ const PromptModal: React.FC<PromptModalProps> = ({ closeModal }) => {
       onClick={handleClickOutside}
     >
       <div
-        className='bg-white p-6 shadow-lg rounded-xl flex flex-col gap-2 items-end'
+        className='bg-white p-6 shadow-lg rounded-xl flex flex-col gap-2 items-end h-max'
         ref={modalContentRef}
         style={{ width: '25%' }}
       >
@@ -67,24 +63,7 @@ const PromptModal: React.FC<PromptModalProps> = ({ closeModal }) => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        <div className='flex items-center gap-4'>
-          {
-            messages.length > 0 && <InsertPromptBtn />
-          }
-          <button
-            className='text-white p-2 rounded-lg w-max px-6 py-2 text-md flex gap-2 items-center self-end h-12'
-            style={{ backgroundColor: '#3B82F6' }}
-            onClick={messages.length < 1 ? handleGenerate : undefined}
-          >
-            <img src={messages.length > 0 ? RegenerateIcon : GenerateIcon} alt="Generate" className='w-5 h-5' />
-            <span style={{ fontSize: '12px' }}>
-              {
-                messages.length > 0 ? 'Regenerate' : 'Generate'
-              }
-            </span>
-          </button>
-        </div>
-
+        <GenPromptBtn messages={messages} handleGenerate={handleGenerate} />
       </div>
     </div>
   )
